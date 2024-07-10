@@ -1,3 +1,9 @@
-from django.shortcuts import render
+from django.contrib.auth import login
+from django.shortcuts import render, redirect
 
-# Create your views here.
+from authentication import forms
+from litrevu import settings
+
+
+def home(request):
+    return render(request, 'review/home.html')
