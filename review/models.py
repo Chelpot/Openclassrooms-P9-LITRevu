@@ -2,6 +2,7 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 from django.conf import settings
 from django.db import models
 
+from PIL import Image
 
 class Ticket(models.Model):
     title = models.CharField(max_length=128)
@@ -39,3 +40,19 @@ class UserFollows(models.Model):
         # ensures we don't get multiple UserFollows instances
         # for unique user-user_followed pairs
         unique_together = ('user', 'followed_user', )
+
+class Photo(models.Model):
+    image = models.ImageField()
+    uploader = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    date_created = models.DateTimeField(auto_now_add=True)
+
+    IMAGE_MAX_SIZE = (800, 800)
+
+    def resize_image(self):
+        image = Image.open(self.image)
+        image.thumbnail(self.IMAGE_MAX_SIZE)
+        image.save(self.image.path)
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        self.resize_image()
