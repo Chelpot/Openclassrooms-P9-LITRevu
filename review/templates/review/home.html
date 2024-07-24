@@ -1,6 +1,14 @@
 {% extends 'base.html' %}
 {% block content %}
     <h2>Votre flux</h2>
+    <div id="content">
+        <div class="btn-content">
+            <a class="button-content" role="button" href="{% url 'ticket_create' %}">Demander une critique</a>
+        </div>
+        <div class="btn-content">
+            <button class="button-content" role="button">Créer une critique</button>
+        </div>
 
+    </div>
 
 {% endblock content %}

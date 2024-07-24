@@ -1,20 +1,24 @@
 {% load static %}
 <html>
     <head>
-        <title>FotoBlog</title>
+        <title>LITRevu</title>
         <link rel="stylesheet" href="{% static 'app.css' %}">
     </head>
     <body>
         <div class="sidebar">
-            <h1>LITRevu</h1>
+            <h1><a href="{% url 'home' %}">LITRevu</a></h1>
+            <br>
             {% if user.is_authenticated %}
                 <p>Salut, {{ user }} !</p>
+                <p><a href="{% url 'home' %}">Flux</a></p>
+                <p><a href="">Vos posts</a></p>
+                <p><a href="">Abonnements</a></p>
                 <form method="post" action="{% url 'logout' %}">
                     {% csrf_token %}
                     <button class="btn-logout" type="submit">Se déconnecter</button>
                 </form>
 
-            {% endif %}
+            {% endif %}<a></a>
         </div>
         <div class="main">
             {% block content %}{% endblock content %}
