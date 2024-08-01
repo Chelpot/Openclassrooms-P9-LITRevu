@@ -1,0 +1,12 @@
+{% load ticket_extras %}
+<div class="card">
+    <div class="container">
+        <div class="snippet-head">
+            <div>Ticket : {{ ticket.user }}</div>
+            <div class="date-created right-elem">{{ ticket.time_created|get_posted_at_display }}</div>
+        </div>
+        <h1>{{ ticket.title }}</h1>
+        <p>{{ ticket.description }}</p>
+        <img class="" src="{{ ticket.image }}">
+    </div>
+</div>

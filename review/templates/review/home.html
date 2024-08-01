@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load ticket_extras %}
 {% block content %}
     <h2>Votre flux</h2>
     <div id="content">
@@ -8,7 +9,17 @@
         <div class="btn-content">
             <button class="button-content" role="button">Créer une critique</button>
         </div>
+    </div>
 
+    <div class="grid-container">
+        {% for post in page_obj %}
+            {% if post|model_type == 'Ticket' %}
+                {% include 'partials/ticket_snippet.html' with ticket=post %}
+            {% endif %}
+            {% if post|model_type == 'Review' %}
+                {% include 'partials/review_snippet.html' with review=post %}
+            {% endif %}
+        {% endfor %}
     </div>
 
 {% endblock content %}
