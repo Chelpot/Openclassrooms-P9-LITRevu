@@ -71,7 +71,9 @@ def create_review(request):
 
 @login_required
 def follow(request):
+    current_user = request.user
     follow_form = forms.FollowForm()
+    follow_list = models.UserFollows.objects.filter(user=current_user)
     if request.method == 'POST':
         follow_form = forms.FollowForm(request.POST)
         if follow_form.is_valid():
@@ -81,12 +83,13 @@ def follow(request):
                 #Check if an user with the given username exist
                 users = UserClass.objects.filter(username=user_to_follow)
                 user_to_follow = users[0]
-                current_user = request.user
+
                 if user_to_follow != current_user:
                     #Check if the user is already following the given user
-                    userFollow, created = models.UserFollows.objects.get_or_create(
+                    models.UserFollows.objects.get_or_create(
                         user=current_user, followed_user=user_to_follow)
     context = {
         'follow_form': follow_form,
+        'follow_list': follow_list,
     }
     return render(request, 'review/follow.html', context=context)

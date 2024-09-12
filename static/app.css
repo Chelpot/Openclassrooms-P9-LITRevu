@@ -101,6 +101,14 @@ html {
   padding: 30px 10px;
 }
 
+.card-follow {
+  width: 100%;
+  border: solid;
+  border-width: 2px;
+  margin: 1px;
+  padding: 0 0 0 10px;
+}
+
 .card:hover {
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
 }
@@ -109,6 +117,15 @@ html {
     display: flex;
     padding: 2px 16px;
     flex-direction: column;
+}
+
+.container-follow {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.justify-start {
+  margin-right: auto;
 }
 
 .post img {
@@ -153,4 +170,13 @@ h1{
 .align-center-horizontal{
     display: flex;
     margin: 0 auto;
+}
+
+.button_follow{
+    width: 100px;
+    padding: 4px;
+}
+
+.follow-name {
+    align-content: center;
 }

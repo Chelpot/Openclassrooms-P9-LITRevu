@@ -89,4 +89,4 @@ class FollowForm(forms.Form):
         self.helper.layout = Layout(
             Field('Username', css_class='large-input align-center-horizontal'),
         )
-        self.helper.add_input(Submit('submit', 'Submit'))
+        self.helper.add_input(Submit('submit', 'Envoyer'))

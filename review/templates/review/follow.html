@@ -3,4 +3,12 @@
     <h2>Suivre d'autres utilisateurs</h2>
     {% load crispy_forms_tags %}
     {% crispy follow_form follow_form.helper %}
+
+    <div class="grid-container">
+        {% for follow in follow_list %}
+            {% include 'partials/follow_snippet.html' with follow=follow %}
+        {% endfor %}
+    </div>
+
+
 {% endblock content %}
