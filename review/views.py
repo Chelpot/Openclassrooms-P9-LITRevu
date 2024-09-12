@@ -1,6 +1,6 @@
 from itertools import chain
 
-from django.contrib.auth import login
+from django.contrib.auth import login, get_user_model
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.db.models import Q
@@ -8,6 +8,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 
 from . import forms, models
 from litrevu import settings
+from .models import UserFollows
+
 
 @login_required
 def home(request):
@@ -66,15 +68,24 @@ def create_review(request):
     }
     return render(request, 'review/create_review.html', context=context)
 
+
 @login_required
 def follow(request):
     follow_form = forms.FollowForm()
     if request.method == 'POST':
         follow_form = forms.FollowForm(request.POST)
         if follow_form.is_valid():
-            pass
-            #A continuer
-
+            UserClass = get_user_model()
+            user_to_follow = request.POST.get("Username", "")
+            if user_to_follow != "":
+                #Check if an user with the given username exist
+                users = UserClass.objects.filter(username=user_to_follow)
+                user_to_follow = users[0]
+                current_user = request.user
+                if user_to_follow != current_user:
+                    #Check if the user is already following the given user
+                    userFollow, created = models.UserFollows.objects.get_or_create(
+                        user=current_user, followed_user=user_to_follow)
     context = {
         'follow_form': follow_form,
     }
