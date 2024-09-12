@@ -12,7 +12,7 @@
                 <p>Salut, {{ user }} !</p>
                 <p><a href="{% url 'home' %}">Flux</a></p>
                 <p><a href="">Vos posts</a></p>
-                <p><a href="">Abonnements</a></p>
+                <p><a href="{% url 'follow' %}">Abonnements</a></p>
                 <form method="post" action="{% url 'logout' %}">
                     {% csrf_token %}
                     <button class="btn-logout" type="submit">Se déconnecter</button>

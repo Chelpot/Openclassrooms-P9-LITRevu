@@ -31,22 +31,18 @@ def home(request):
 @login_required
 def create_ticket(request):
     ticket_form = forms.TicketForm()
-    photo_form = forms.PhotoForm()
     if request.method == 'POST':
-        ticket_form = forms.TicketForm(request.POST)
-        photo_form = forms.PhotoForm(request.POST, request.FILES)
-        if all([ticket_form.is_valid(), photo_form.is_valid()]):
-            photo = photo_form.save(commit=False)
-            photo.uploader = request.user
-            photo.save()
+        ticket_form = forms.TicketForm(request.POST, request.FILES)
+        if ticket_form.is_valid():
             ticket = ticket_form.save(commit=False)
-            ticket.photo = photo
             ticket.user = request.user
             ticket.save()
-            return redirect('home')
+            return redirect('ticket_create')
+        else:
+            print("Form is not valid")
+            print(ticket_form.errors)
     context = {
         'ticket_form': ticket_form,
-        'photo_form': photo_form,
     }
     return render(request, 'review/create_ticket.html', context=context)
 
@@ -54,3 +50,32 @@ def create_ticket(request):
 def view_ticket(request, ticket_id):
     ticket = get_object_or_404(models.Ticket, id=ticket_id)
     return render(request, 'review/view_ticket.html', {'ticket': ticket})
+
+@login_required
+def create_review(request):
+    review_form = forms.ReviewForm()
+    if request.method == 'POST':
+        review_form = forms.ReviewForm(request.POST)
+        if review_form.is_valid():
+            ticket = review_form.save(commit=False)
+            ticket.user = request.user
+            ticket.save()
+            return redirect('home')
+    context = {
+        'review_form': review_form,
+    }
+    return render(request, 'review/create_review.html', context=context)
+
+@login_required
+def follow(request):
+    follow_form = forms.FollowForm()
+    if request.method == 'POST':
+        follow_form = forms.FollowForm(request.POST)
+        if follow_form.is_valid():
+            pass
+            #A continuer
+
+    context = {
+        'follow_form': follow_form,
+    }
+    return render(request, 'review/follow.html', context=context)

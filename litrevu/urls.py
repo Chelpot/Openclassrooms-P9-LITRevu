@@ -1,9 +1,11 @@
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView, PasswordChangeDoneView
 from django.urls import path
 
 import authentication.views
 import review.views
+from litrevu import settings
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -23,6 +25,8 @@ urlpatterns = [
          name='password_change_done'
          ),
     path('ticket/create/', review.views.create_ticket, name='ticket_create'),
+    path('ticket/create_review/', review.views.create_review, name='review_create'),
     path('ticket/<int:ticket_id>', review.views.view_ticket, name='view_ticket'),
+    path('follow/', review.views.follow, name='follow'),
 
-]
+]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

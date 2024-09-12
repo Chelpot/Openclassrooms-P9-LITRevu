@@ -32,7 +32,7 @@ html {
 
 /* Style page content */
 .main {
-    margin-left: 240px; /* Same as the width of the sidebar */
+    margin-left: 240px;
     padding: 20px;
 }
 
@@ -131,4 +131,26 @@ h1{
 
 .date-created{
     font-size: 0.6rem;
+}
+.custom-radio{
+    display: inline-block;
+}
+
+/* ReviewForm */
+.button{
+    margin: 1rem 0;
+}
+.ticket-form > *{
+    margin: 1rem 0 0 0;
+}
+
+.large-input{
+    height: 3rem;
+    width: 100%;
+    font-size: 1.5rem;
+}
+
+.align-center-horizontal{
+    display: flex;
+    margin: 0 auto;
 }
