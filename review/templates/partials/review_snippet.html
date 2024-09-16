@@ -1,0 +1,24 @@
+{% load ticket_extras %}
+
+
+<div class="card">
+    <div class="container">
+        <div class="snippet-head">
+            <div>Critique : {{ review.user }}</div>
+            <div class="date-created right-elem">{{ review.time_created|get_posted_at_display }}</div>
+        </div>
+        <h1>{{ review.headline }}</h1>
+        <p>{{ review.description }}</p>
+    </div>
+    <div class="container border_around">
+        <div class="snippet-head">
+            <div>Ticket : {{ review.ticket.user }}</div>
+            <div class="date-created right-elem">{{ review.ticket.time_created|get_posted_at_display }}</div>
+        </div>
+        <h1>{{ review.ticket.title }}</h1>
+        <p>{{ review.ticket.description }}</p>
+        {% if review.ticket.image %}
+        <img class="" src="{{ review.ticket.image.url }}">
+        {% endif %}
+    </div>
+</div>

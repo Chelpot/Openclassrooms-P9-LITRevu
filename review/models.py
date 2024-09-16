@@ -20,7 +20,11 @@ class Ticket(models.Model):
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
-        self.resize_image()
+        if self.image:
+            self.resize_image()
+
+    def __str__(self):
+        return self.title
 
 
 class Review(models.Model):
@@ -34,6 +38,8 @@ class Review(models.Model):
         to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     time_created = models.DateTimeField(auto_now_add=True)
 
+    def __str__(self):
+        return self.headline
 
 class UserFollows(models.Model):
     user = models.ForeignKey(

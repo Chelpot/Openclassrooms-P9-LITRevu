@@ -93,12 +93,12 @@ html {
 }
 
 .card {
-  width: 500px;
+  width: 50%;
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
   transition: 0.3s;
   border-radius: 5px;
   margin: 20px;
-  padding: 30px 10px;
+  padding: 10px 10px;
 }
 
 .card-follow {
@@ -115,7 +115,7 @@ html {
 
 .container {
     display: flex;
-    padding: 2px 16px;
+    padding: 16px 16px;
     flex-direction: column;
 }
 
@@ -185,4 +185,9 @@ h1{
 
 .no-margin {
     margin: 0px;
+}
+
+.border_around{
+    border: solid;
+    border-radius: 5px;
 }

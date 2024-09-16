@@ -64,11 +64,24 @@ def view_ticket(request, ticket_id):
 def create_review(request):
     review_form = forms.ReviewForm()
     if request.method == 'POST':
-        review_form = forms.ReviewForm(request.POST)
+        print(request.POST)
+        review_form = forms.ReviewForm(request.POST, request.FILES)
         if review_form.is_valid():
-            ticket = review_form.save(commit=False)
-            ticket.user = request.user
+            ticket = models.Ticket(
+                title = request.POST.get("title"),
+                description = request.POST.get("description"),
+                image = request.FILES.get("image", ""),
+                user = request.user,
+            )
             ticket.save()
+            review = models.Review(
+                ticket = ticket,
+                rating = request.POST.get("rating"),
+                headline = request.POST.get("headline"),
+                body = request.POST.get("body"),
+                user = request.user
+            )
+            review.save()
             return redirect('home')
     context = {
         'review_form': review_form,

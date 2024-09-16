@@ -25,7 +25,7 @@ class TicketForm(forms.ModelForm):
     )
 
     image = forms.ImageField(
-        label = "Charger une image",
+        label = "Télécharger fichier",
         required = False,
     )
 
@@ -39,8 +39,26 @@ class TicketForm(forms.ModelForm):
 
 
 class ReviewForm(forms.Form):
+
     title = forms.CharField(
-        label = "Titre",
+        label="Titre de l'ouvrage",
+        max_length=100,
+        required=True,
+    )
+
+    description = forms.CharField(
+        label = "Description",
+        required = False,
+    )
+
+    image = forms.ImageField(
+        label = "Télécharger fichier",
+        required = False,
+    )
+
+    #Review part
+    headline = forms.CharField(
+        label = "Titre de la critique",
         max_length = 100,
         required = True,
     )
@@ -60,8 +78,8 @@ class ReviewForm(forms.Form):
         required = True,
     )
 
-    description = forms.CharField(
-        label = "Description",
+    body = forms.CharField(
+        label = "Description ",
         required = False,
     )
 
