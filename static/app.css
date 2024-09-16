@@ -179,4 +179,10 @@ h1{
 
 .follow-name {
     align-content: center;
+    border: none;
+    outline: none;
+}
+
+.no-margin {
+    margin: 0px;
 }

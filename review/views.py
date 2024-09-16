@@ -74,20 +74,28 @@ def follow(request):
     current_user = request.user
     follow_form = forms.FollowForm()
     follow_list = models.UserFollows.objects.filter(user=current_user)
+    UserClass = get_user_model()
     if request.method == 'POST':
-        follow_form = forms.FollowForm(request.POST)
-        if follow_form.is_valid():
-            UserClass = get_user_model()
-            user_to_follow = request.POST.get("Username", "")
-            if user_to_follow != "":
-                #Check if an user with the given username exist
-                users = UserClass.objects.filter(username=user_to_follow)
-                user_to_follow = users[0]
+        if 'subscribe' in request.POST:
+            #Subscribe
+            follow_form = forms.FollowForm(request.POST)
+            if follow_form.is_valid():
+                user_to_follow = request.POST.get("Username", "")
+                if user_to_follow != "":
+                    #Check if an user with the given username exist
+                    user_to_follow = get_object_or_404(UserClass, username=user_to_follow)
+                    if user_to_follow != current_user:
+                        #Check if the user is already following the given user
+                        models.UserFollows.objects.get_or_create(
+                            user=current_user, followed_user=user_to_follow)
+        else:
+            #Unsubscribe
+            user_to_unfollow = request.POST.get("followed_user", "")
+            followed_user = get_object_or_404(UserClass, username=user_to_unfollow)
+            relation = models.UserFollows.objects.filter(user=current_user, followed_user=followed_user)
+            relation.delete()
 
-                if user_to_follow != current_user:
-                    #Check if the user is already following the given user
-                    models.UserFollows.objects.get_or_create(
-                        user=current_user, followed_user=user_to_follow)
+            pass
     context = {
         'follow_form': follow_form,
         'follow_list': follow_list,

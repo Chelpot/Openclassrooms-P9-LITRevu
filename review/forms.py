@@ -76,9 +76,9 @@ class ReviewForm(forms.Form):
 class FollowForm(forms.Form):
     Username = forms.CharField(
         max_length = 100,
-        required = True,
         label="Nom d'utilisateur",
-        widget=forms.TextInput(attrs={'placeholder': "Entrez le nom d'un utilisateur à suivre"})
+        widget=forms.TextInput(attrs={'placeholder': "Entrez le nom d'un utilisateur à suivre",
+                                      'name': 'subscribe'})
     )
 
     def __init__(self, *args, **kwargs):
@@ -89,4 +89,4 @@ class FollowForm(forms.Form):
         self.helper.layout = Layout(
             Field('Username', css_class='large-input align-center-horizontal'),
         )
-        self.helper.add_input(Submit('submit', 'Envoyer'))
+        self.helper.add_input(Submit('subscribe', 'Envoyer'))
