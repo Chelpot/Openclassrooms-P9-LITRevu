@@ -13,8 +13,15 @@ from .models import UserFollows
 
 @login_required
 def home(request):
-    tickets = models.Ticket.objects.filter()
-    reviews = models.Review.objects.filter()
+    current_user = request.user
+    tickets = models.Ticket.objects.filter(user=current_user)
+    reviews = models.Review.objects.filter(user=current_user)
+    list_user_Followed = models.UserFollows.objects.filter(user=current_user)
+
+    for relation in list_user_Followed:
+        tickets |= models.Ticket.objects.filter(user=relation.followed_user)
+        reviews |= models.Review.objects.filter(user=relation.followed_user)
+
     ticket_and_reviews = sorted(
         chain(tickets, reviews),
         key=lambda post: post.time_created,
