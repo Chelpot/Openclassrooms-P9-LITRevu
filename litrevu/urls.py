@@ -24,9 +24,15 @@ urlpatterns = [
         template_name='authentication/password_change_done.html'),
          name='password_change_done'
          ),
-    path('ticket/create/', review.views.create_ticket, name='ticket_create'),
-    path('ticket/create_review/', review.views.create_review, name='review_create'),
-    path('ticket/<int:ticket_id>', review.views.view_ticket, name='view_ticket'),
     path('follow/', review.views.follow, name='follow'),
+    path('ticket/create/', review.views.create_ticket, name='ticket_create'),
+    path('ticket/<int:ticket_id>', review.views.view_ticket, name='view_ticket'),
+    path('ticket/delete/<int:ticket_id>', review.views.delete_ticket, name='ticket_delete'),
+    path('ticket/edit/<int:ticket_id>', review.views.edit_ticket, name='ticket_edit'),
+    path('review/create/', review.views.create_review, name='review_create'),
+    path('review/delete/<int:review_id>', review.views.delete_review, name='review_delete'),
+    path('review/edit/<int:review_id>', review.views.edit_review, name='review_edit'),
 
-]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+              ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+

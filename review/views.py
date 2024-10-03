@@ -14,13 +14,21 @@ from .models import UserFollows
 @login_required
 def home(request):
     current_user = request.user
-    tickets = models.Ticket.objects.filter(user=current_user)
-    reviews = models.Review.objects.filter(user=current_user)
+    tickets = models.Ticket.objects.filter(user=current_user).all()
+    reviews = models.Review.objects.filter(user=current_user).all()
     list_user_Followed = models.UserFollows.objects.filter(user=current_user)
 
     for relation in list_user_Followed:
         tickets |= models.Ticket.objects.filter(user=relation.followed_user)
         reviews |= models.Review.objects.filter(user=relation.followed_user)
+
+
+    #Remove from flux tickets that already have a review
+    for ticket in tickets:
+        for review in reviews:
+            if ticket == review.ticket:
+                tickets = tickets.exclude(id=ticket.id)
+
 
     ticket_and_reviews = sorted(
         chain(tickets, reviews),
@@ -121,3 +129,61 @@ def follow(request):
         'follow_list': follow_list,
     }
     return render(request, 'review/follow.html', context=context)
+
+@login_required
+def edit_ticket(request, ticket_id):
+    ticket = get_object_or_404(models.Ticket, pk=ticket_id)
+    if request.method == 'POST':
+        ticket_form = forms.TicketForm(request.POST, request.FILES, instance=ticket)
+        if ticket_form.is_valid():
+            ticket_form.save()
+            return redirect('home')
+        else:
+            print("Form is not valid")
+            print(ticket_form.errors)
+    else:
+        ticket_form = forms.TicketForm(instance=ticket)
+    context = {
+        'ticket_form': ticket_form,
+    }
+    return render(request, 'review/edit_ticket.html', context=context)
+
+@login_required
+def delete_ticket(request, ticket_id):
+    if request.method == 'POST':
+        ticket = get_object_or_404(models.Ticket, pk=ticket_id)
+        ticket.delete()
+        return redirect(home)
+    context={
+        'ticket_id': ticket_id,
+    }
+    return render(request, 'review/delete_ticket.html', context)
+
+@login_required
+def edit_review(request, review_id):
+    review = get_object_or_404(models.Review, pk=review_id)
+    if request.method == 'POST':
+        review_form = forms.ReviewEditForm(request.POST, instance=review)
+        if review_form.is_valid():
+            review_form.save()
+            return redirect('home')
+        else:
+            print("Form is not valid")
+            print(review_form.errors)
+    else:
+        review_form = forms.ReviewEditForm(instance=review)
+    context = {
+        'review_form': review_form,
+    }
+    return render(request, 'review/edit_review.html', context=context)
+
+@login_required
+def delete_review(request, review_id):
+    if request.method == 'POST':
+        review = get_object_or_404(models.Review, pk=review_id)
+        review.delete()
+        return redirect(home)
+    context = {
+        'review_id': review_id,
+    }
+    return render(request, 'review/delete_review.html', context)

@@ -157,7 +157,7 @@ h1{
 .button{
     margin: 1rem 0;
 }
-.ticket-form > *{
+.form > *{
     margin: 1rem 0 0 0;
 }
 
@@ -190,4 +190,12 @@ h1{
 .border_around{
     border: solid;
     border-radius: 5px;
+}
+
+.horizontal-align{
+    display: flex;
+}
+
+.margin_top{
+    margin-top: 16px;
 }

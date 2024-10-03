@@ -1,8 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
-
 {% load crispy_forms_tags %}
-<h2>Création de ticket</h2>
+<h2>Edition de ticket</h2>
 <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     {% crispy ticket_form ticket_form.helper %}

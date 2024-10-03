@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load ticket_extras %}
+<div class="card ">
+    <div class="container">
+        <form class="no-margin" action="" method="post">
+            {% csrf_token %}
+            <p>Voulez‑vous vraiment supprimer ce ticket ?</p>
+            <div class="horizontal-align align-center-horizontal margin_top">
+                <div class="btn-content">
+                    <input class="button-content" formaction="{% url 'ticket_delete' ticket_id %}" type="submit"
+                           value="Confirmer">
+                </div>
+                <div class="btn-content">
+                    <input class="button-content" role="button" formaction="{% url 'home'%}" type="submit"
+                           value="Abandonner">
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock content %}
