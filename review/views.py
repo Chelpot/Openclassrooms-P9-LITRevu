@@ -22,13 +22,11 @@ def home(request):
         tickets |= models.Ticket.objects.filter(user=relation.followed_user)
         reviews |= models.Review.objects.filter(user=relation.followed_user)
 
-
-    #Remove from flux tickets that already have a review
+    # Remove from flux tickets that already have a review
     for ticket in tickets:
         for review in reviews:
             if ticket == review.ticket:
                 tickets = tickets.exclude(id=ticket.id)
-
 
     ticket_and_reviews = sorted(
         chain(tickets, reviews),
@@ -44,6 +42,7 @@ def home(request):
         'page_obj': page_obj,
     }
     return render(request, 'review/home.html', context=context)
+
 
 @login_required
 def create_ticket(request):
@@ -63,10 +62,12 @@ def create_ticket(request):
     }
     return render(request, 'review/create_ticket.html', context=context)
 
+
 @login_required
 def view_ticket(request, ticket_id):
     ticket = get_object_or_404(models.Ticket, id=ticket_id)
     return render(request, 'review/view_ticket.html', {'ticket': ticket})
+
 
 @login_required
 def create_review(request):
@@ -76,18 +77,18 @@ def create_review(request):
         review_form = forms.ReviewForm(request.POST, request.FILES)
         if review_form.is_valid():
             ticket = models.Ticket(
-                title = request.POST.get("title"),
-                description = request.POST.get("description"),
-                image = request.FILES.get("image", ""),
-                user = request.user,
+                title=request.POST.get("title"),
+                description=request.POST.get("description"),
+                image=request.FILES.get("image", ""),
+                user=request.user,
             )
             ticket.save()
             review = models.Review(
-                ticket = ticket,
-                rating = request.POST.get("rating"),
-                headline = request.POST.get("headline"),
-                body = request.POST.get("body"),
-                user = request.user
+                ticket=ticket,
+                rating=request.POST.get("rating"),
+                headline=request.POST.get("headline"),
+                body=request.POST.get("body"),
+                user=request.user
             )
             review.save()
             return redirect('home')
@@ -105,19 +106,19 @@ def follow(request):
     UserClass = get_user_model()
     if request.method == 'POST':
         if 'subscribe' in request.POST:
-            #Subscribe
+            # Subscribe
             follow_form = forms.FollowForm(request.POST)
             if follow_form.is_valid():
                 user_to_follow = request.POST.get("Username", "")
                 if user_to_follow != "":
-                    #Check if an user with the given username exist
+                    # Check if an user with the given username exist
                     user_to_follow = get_object_or_404(UserClass, username=user_to_follow)
                     if user_to_follow != current_user:
-                        #Check if the user is already following the given user
+                        # Check if the user is already following the given user
                         models.UserFollows.objects.get_or_create(
                             user=current_user, followed_user=user_to_follow)
         else:
-            #Unsubscribe
+            # Unsubscribe
             user_to_unfollow = request.POST.get("followed_user", "")
             followed_user = get_object_or_404(UserClass, username=user_to_unfollow)
             relation = models.UserFollows.objects.filter(user=current_user, followed_user=followed_user)
@@ -130,6 +131,7 @@ def follow(request):
     }
     return render(request, 'review/follow.html', context=context)
 
+
 @login_required
 def edit_ticket(request, ticket_id):
     ticket = get_object_or_404(models.Ticket, pk=ticket_id)
@@ -137,7 +139,7 @@ def edit_ticket(request, ticket_id):
         ticket_form = forms.TicketForm(request.POST, request.FILES, instance=ticket)
         if ticket_form.is_valid():
             ticket_form.save()
-            return redirect('home')
+            return redirect('my_posts')
         else:
             print("Form is not valid")
             print(ticket_form.errors)
@@ -148,16 +150,18 @@ def edit_ticket(request, ticket_id):
     }
     return render(request, 'review/edit_ticket.html', context=context)
 
+
 @login_required
 def delete_ticket(request, ticket_id):
     if request.method == 'POST':
         ticket = get_object_or_404(models.Ticket, pk=ticket_id)
         ticket.delete()
         return redirect(home)
-    context={
+    context = {
         'ticket_id': ticket_id,
     }
     return render(request, 'review/delete_ticket.html', context)
+
 
 @login_required
 def edit_review(request, review_id):
@@ -166,7 +170,7 @@ def edit_review(request, review_id):
         review_form = forms.ReviewEditForm(request.POST, instance=review)
         if review_form.is_valid():
             review_form.save()
-            return redirect('home')
+            return redirect('my_posts')
         else:
             print("Form is not valid")
             print(review_form.errors)
@@ -176,6 +180,7 @@ def edit_review(request, review_id):
         'review_form': review_form,
     }
     return render(request, 'review/edit_review.html', context=context)
+
 
 @login_required
 def delete_review(request, review_id):
@@ -187,3 +192,25 @@ def delete_review(request, review_id):
         'review_id': review_id,
     }
     return render(request, 'review/delete_review.html', context)
+
+
+@login_required
+def my_posts(request):
+    current_user = request.user
+    tickets = models.Ticket.objects.filter(user=current_user).all()
+    reviews = models.Review.objects.filter(user=current_user).all()
+
+    ticket_and_reviews = sorted(
+        chain(tickets, reviews),
+        key=lambda post: post.time_created,
+        reverse=True
+    )
+
+    paginator = Paginator(ticket_and_reviews, 6)
+    page = request.GET.get('page')
+    page_obj = paginator.get_page(page)
+
+    context = {
+        'page_obj': page_obj,
+    }
+    return render(request, 'review/my_posts.html', context=context)

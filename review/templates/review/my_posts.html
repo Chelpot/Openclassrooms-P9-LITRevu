@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load ticket_extras %}
+{% block content %}
+<div class="center-title">Vos posts</div>
+<div class="grid-container">
+    {% for post in page_obj %}
+    {% if post|model_type == 'Ticket' %}
+    {% include 'partials/ticket_edit_snippet.html' with ticket=post %}
+    {% endif %}
+    {% if post|model_type == 'Review' %}
+    {% include 'partials/review_edit_snippet.html' with review=post %}
+    {% endif %}
+    {% endfor %}
+</div>
+{% endblock content %}

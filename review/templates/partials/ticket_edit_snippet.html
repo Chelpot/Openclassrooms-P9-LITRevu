@@ -1,0 +1,24 @@
+{% load ticket_extras %}
+<div class="card">
+    <div class="container">
+        <div class="snippet-head">
+            <div>Ticket : {{ ticket.user }}</div>
+            <div class="date-created right-elem">{{ ticket.time_created|get_posted_at_display }}</div>
+        </div>
+        <h1>{{ ticket.title }}</h1>
+        <p>{{ ticket.description }}</p>
+        {% if ticket.image %}
+        <img class="" src="{{ ticket.image.url }}">
+        {% endif %}
+        {% if ticket.user == user %}
+        <div class="horizontal-align align-center-horizontal margin_top">
+            <div class="btn-content">
+                <a class="button-content" role="button" href="{% url 'ticket_delete' ticket.id %}">Supprimer</a>
+            </div>
+            <div class="btn-content">
+                <a class="button-content" role="button" href="{% url 'ticket_edit' ticket.id %}">Editer</a>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>

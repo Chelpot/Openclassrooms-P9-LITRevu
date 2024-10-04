@@ -21,4 +21,16 @@
         <img class="" src="{{ review.ticket.image.url }}">
         {% endif %}
     </div>
+    {% if review.user == user %}
+    <div class="container">
+        <div class="horizontal-align align-center-horizontal margin_top">
+            <div class="btn-content">
+                <a class="button-content" role="button" href="{% url 'review_delete' review.id %}">Supprimer</a>
+            </div>
+            <div class="btn-content">
+                <a class="button-content" role="button" href="{% url 'review_edit' review.id %}">Editer</a>
+            </div>
+        </div>
+    </div>
+    {% endif %}
 </div>
