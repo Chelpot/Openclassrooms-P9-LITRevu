@@ -71,10 +71,10 @@ def view_ticket(request, ticket_id):
 
 @login_required
 def create_review(request):
-    review_form = forms.ReviewForm()
+    review_form = forms.ReviewTicketForm()
     if request.method == 'POST':
         print(request.POST)
-        review_form = forms.ReviewForm(request.POST, request.FILES)
+        review_form = forms.ReviewTicketForm(request.POST, request.FILES)
         if review_form.is_valid():
             ticket = models.Ticket(
                 title=request.POST.get("title"),
@@ -167,7 +167,7 @@ def delete_ticket(request, ticket_id):
 def edit_review(request, review_id):
     review = get_object_or_404(models.Review, pk=review_id)
     if request.method == 'POST':
-        review_form = forms.ReviewEditForm(request.POST, instance=review)
+        review_form = forms.ReviewOnlyForm(request.POST, instance=review)
         if review_form.is_valid():
             review_form.save()
             return redirect('my_posts')
@@ -175,7 +175,7 @@ def edit_review(request, review_id):
             print("Form is not valid")
             print(review_form.errors)
     else:
-        review_form = forms.ReviewEditForm(instance=review)
+        review_form = forms.ReviewOnlyForm(instance=review)
     context = {
         'review_form': review_form,
     }
@@ -214,3 +214,22 @@ def my_posts(request):
         'page_obj': page_obj,
     }
     return render(request, 'review/my_posts.html', context=context)
+
+@login_required
+def create_review_for_ticket(request, ticket_id):
+    ticket = get_object_or_404(models.Ticket, id=ticket_id)
+    review_form = forms.ReviewOnlyForm(request.POST)
+    if request.method == 'POST':
+        if review_form.is_valid():
+            review = review_form.save(commit=False)
+            review.ticket = ticket
+            review.user = request.user
+            review.save()
+            return redirect('home')
+        else:
+            print("Form is not valid")
+            print(review_form.errors)
+    context = {
+        'review_form': review_form,
+    }
+    return render(request, 'review/create_review_for_ticket.html', context=context)

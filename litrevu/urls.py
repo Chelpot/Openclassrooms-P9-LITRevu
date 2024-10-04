@@ -32,6 +32,7 @@ urlpatterns = [
     path('review/create/', review.views.create_review, name='review_create'),
     path('review/delete/<int:review_id>', review.views.delete_review, name='review_delete'),
     path('review/edit/<int:review_id>', review.views.edit_review, name='review_edit'),
+    path('review/create/answer/<int:ticket_id>', review.views.create_review_for_ticket, name='review_create_for_ticket'),
     path('my_posts/', review.views.my_posts, name='my_posts'),
 
               ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

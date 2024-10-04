@@ -36,7 +36,7 @@ class TicketForm(forms.ModelForm):
         self.helper.form_method = 'post'
         self.helper.add_input(Submit('submit', 'Publier', css_class='button'))
 
-class ReviewForm(forms.Form):
+class ReviewTicketForm(forms.Form):
     title = forms.CharField(
         label="Titre de l'ouvrage",
         max_length=100,
@@ -87,7 +87,7 @@ class ReviewForm(forms.Form):
         self.helper.form_method = 'post'
         self.helper.add_input(Submit('submit', 'Valider'))
 
-class ReviewEditForm(forms.ModelForm):
+class ReviewOnlyForm(forms.ModelForm):
     class Meta:
         model = models.Review
         fields = ['headline', 'rating', 'body']

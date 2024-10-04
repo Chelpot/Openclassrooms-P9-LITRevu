@@ -10,5 +10,10 @@
         {% if ticket.image %}
         <img class="" src="{{ ticket.image.url }}">
         {% endif %}
+        <div class="horizontal-align align-center-horizontal margin_top">
+            <div class="btn-content">
+                <a class="button-content" role="button" href="{% url 'review_create_for_ticket' ticket.id%}">Créer une critique</a>
+            </div>
+        </div>
     </div>
 </div>
