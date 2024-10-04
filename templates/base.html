@@ -1,27 +1,27 @@
 {% load static %}
 <html>
-    <head>
-        <title>LITRevu</title>
-        <link rel="stylesheet" href="{% static 'app.css' %}">
-    </head>
-    <body>
-        <div class="sidebar">
-            <h1><a href="{% url 'home' %}">LITRevu</a></h1>
-            <br>
-            {% if user.is_authenticated %}
-                <p>Salut, {{ user }} !</p>
-                <p><a href="{% url 'home' %}">Flux</a></p>
-                <p><a href="">Vos posts</a></p>
-                <p><a href="{% url 'follow' %}">Abonnements</a></p>
-                <form method="post" action="{% url 'logout' %}">
-                    {% csrf_token %}
-                    <button class="btn-logout" type="submit">Se déconnecter</button>
-                </form>
-
-            {% endif %}<a></a>
-        </div>
-        <div class="main">
-            {% block content %}{% endblock content %}
-        </div>
-    </body>
+<head>
+    <title>LITRevu</title>
+    <link rel="stylesheet" href="{% static 'app.css' %}">
+</head>
+<body>
+<nav>
+    <a href="{% url 'home' %}">LITRevu</a>
+    <ul class="list">
+        <li><a href="{% url 'home' %}">Flux</a></li>
+        <li><a href="">Vos posts</a></li>
+        <li><a href="{% url 'follow' %}">Abonnements</a></li>
+        <li>
+            <form class="center-items" method="post" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button class="btn-logout" type="submit">Se déconnecter</button>
+            </form>
+        </li>
+        <li>Utilisateur : {{ user }}<li>
+    </ul>
+</nav>
+<div class="main">
+    {% block content %}{% endblock content %}
+</div>
+</body>
 </html>
