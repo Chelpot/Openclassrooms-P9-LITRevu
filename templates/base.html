@@ -6,11 +6,11 @@
 </head>
 <body>
 <nav>
-    <a href="{% url 'home' %}">LITRevu</a>
+    <a class="hide-link" href="{% url 'home' %}">LITRevu</a>
     <ul class="list">
-        <li><a href="{% url 'home' %}">Flux</a></li>
-        <li><a href="{% url 'my_posts' %}">Mes posts</a></li>
-        <li><a href="{% url 'follow' %}">Abonnements</a></li>
+        <li><a class="hide-link" href="{% url 'home' %}">Flux</a></li>
+        <li><a class="hide-link" href="{% url 'my_posts' %}">Mes posts</a></li>
+        <li><a class="hide-link" href="{% url 'follow' %}">Abonnements</a></li>
         <li>
             <form class="center-items" method="post" action="{% url 'logout' %}">
                 {% csrf_token %}

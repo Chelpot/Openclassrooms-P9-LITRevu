@@ -20,7 +20,7 @@ nav {
     padding: 16px 50px 16px 50px;
     }
 }
-a {
+.hide-link {
     color: inherit;
     text-decoration: none;
     &:hover,
