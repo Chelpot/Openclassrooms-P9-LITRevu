@@ -7,7 +7,7 @@
             <div>Critique : {{ review.user }}</div>
             <div class="date-created right-elem">{{ review.time_created|get_posted_at_display }}</div>
         </div>
-        <h1>{{ review.headline }}</h1>
+        <h1>{{ review.headline }} - {{ review.rating|get_rating }}</h1>
         <p>{{ review.body }}</p>
     </div>
     <div class="container border_around">

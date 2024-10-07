@@ -6,6 +6,9 @@ register = template.Library()
 MINUTE = 60
 HOUR = 60 * MINUTE
 DAY = 24 * HOUR
+ICON_STAR_RATING = '★'
+ICON_STAR_RATING_EMPTY = '☆'
+MAX_NB_STAR_RATING = 5
 
 @register.filter
 def model_type(value):
@@ -19,3 +22,7 @@ def get_posted_at_display(posted_at):
     elif seconds_ago <= DAY:
         return f'Publié il y a {int(seconds_ago // HOUR)} heures.'
     return f'{posted_at.strftime("%Hh%M, %d %b %y")}'
+
+@register.filter
+def get_rating(nb_star):
+    return nb_star*ICON_STAR_RATING + (5-nb_star)*ICON_STAR_RATING_EMPTY

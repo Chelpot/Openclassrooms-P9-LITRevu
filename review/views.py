@@ -169,6 +169,7 @@ def edit_review(request, review_id):
     if request.method == 'POST':
         review_form = forms.ReviewOnlyForm(request.POST, instance=review)
         if review_form.is_valid():
+            review.rating = request.POST.get('rating')
             review_form.save()
             return redirect('my_posts')
         else:
