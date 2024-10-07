@@ -1,8 +1,10 @@
 {% extends 'base.html' %}
 {% block content %}
-<h2>Création de critique</h2>
-{% load crispy_forms_tags %}
-<div class="card">
-    {% crispy review_form review_form.helper %}
+<div class="grid-container">
+    <h2>Création de critique</h2>
+    {% load crispy_forms_tags %}
+    <div class="card">
+        {% crispy review_form review_form.helper %}
+    </div>
 </div>
 {% endblock content %}

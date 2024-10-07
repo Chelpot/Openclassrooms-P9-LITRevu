@@ -179,6 +179,7 @@ def edit_review(request, review_id):
         review_form = forms.ReviewOnlyForm(instance=review)
     context = {
         'review_form': review_form,
+        'ticket': review.ticket,
     }
     return render(request, 'review/edit_review.html', context=context)
 
