@@ -1,6 +1,12 @@
 {% extends 'base.html' %}
 {% block content %}
 {% load crispy_forms_tags %}
-<h2>Edition de critique</h2>
-{% crispy review_form review_form.helper %}
+<div class="grid-container">
+    <h2>Créer une critique en réponse au ticket</h2>
+    <div class="card">
+        {% crispy review_form review_form.helper %}
+    </div>
+    <div> Vous êtes en train de poster en réponse à</div>
+    {% include 'partials/ticket_snippet.html' with ticket=ticket %}
+</div>
 {% endblock content %}

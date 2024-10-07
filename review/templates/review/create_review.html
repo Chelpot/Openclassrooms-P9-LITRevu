@@ -2,5 +2,7 @@
 {% block content %}
 <h2>Création de critique</h2>
 {% load crispy_forms_tags %}
-{% crispy review_form review_form.helper %}
+<div class="card">
+    {% crispy review_form review_form.helper %}
+</div>
 {% endblock content %}

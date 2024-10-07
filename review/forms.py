@@ -17,11 +17,13 @@ class TicketForm(forms.ModelForm):
         label="Titre",
         max_length=100,
         required=True,
+        widget=forms.TextInput(attrs={'class': 'larger_input_text'}),
     )
 
     description = forms.CharField(
         label="Description",
         required=False,
+        widget=forms.Textarea(attrs={'class': 'larger_input_text'}),
     )
 
     image = forms.ImageField(
@@ -39,13 +41,17 @@ class TicketForm(forms.ModelForm):
 class ReviewTicketForm(forms.Form):
     title = forms.CharField(
         label="Titre de l'ouvrage",
-        max_length=100,
+        max_length=128,
         required=True,
+        widget=forms.TextInput(attrs={'class': 'larger_input_text'}),
     )
 
     description = forms.CharField(
         label = "Description",
+        max_length= 2048,
         required = False,
+        widget=forms.Textarea(attrs={'class': 'larger_input_text'}),
+
     )
 
     image = forms.ImageField(
@@ -56,8 +62,9 @@ class ReviewTicketForm(forms.Form):
     #Review part
     headline = forms.CharField(
         label="Titre de la critique",
-        max_length=100,
+        max_length=128,
         required=True,
+        widget=forms.TextInput(attrs={'class': 'larger_input_text'}),
     )
 
     rating = forms.TypedChoiceField(
@@ -70,14 +77,16 @@ class ReviewTicketForm(forms.Form):
                  (5, "5"),
                  ),
         coerce=lambda x: bool(int(x)),
-        widget=forms.RadioSelect(attrs={'class': 'radio-horizontal'}),
         initial='0',
         required=True,
+        widget=forms.RadioSelect(),
     )
 
     body = forms.CharField(
         label="Description ",
+        max_length=8192,
         required=False,
+        widget=forms.Textarea(attrs={'class': 'larger_input_text'}),
     )
 
     def __init__(self, *args, **kwargs):
@@ -96,6 +105,7 @@ class ReviewOnlyForm(forms.ModelForm):
         label="Titre de la critique",
         max_length=100,
         required=True,
+        widget=forms.TextInput(attrs={'class': 'larger_input_text'}),
     )
 
     rating = forms.TypedChoiceField(
@@ -108,14 +118,15 @@ class ReviewOnlyForm(forms.ModelForm):
                  (5, "5"),
                  ),
         coerce=lambda x: bool(int(x)),
-        widget=forms.RadioSelect(attrs={'class': 'radio-horizontal'}),
         initial='0',
         required=True,
+        widget=forms.RadioSelect(),
     )
 
     body = forms.CharField(
         label="Description ",
         required=False,
+        widget=forms.Textarea(attrs={'class': 'larger_input_text'}),
     )
 
     def __init__(self, *args, **kwargs):

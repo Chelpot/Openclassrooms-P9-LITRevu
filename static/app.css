@@ -173,7 +173,7 @@ h1{
     font-size: 0.6rem;
 }
 .custom-radio{
-    display: inline-block;
+    display: inline;
 }
 
 /* ReviewForm */
@@ -229,4 +229,9 @@ h1{
     place-content: center;
     font-size: xx-large;
     font-weight: bold;
+}
+
+.larger_input_text{
+    width: 100%;
+    background: white;
 }

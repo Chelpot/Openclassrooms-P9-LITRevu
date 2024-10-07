@@ -4,7 +4,9 @@
 <h2>Edition de ticket</h2>
 <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
-    {% crispy ticket_form ticket_form.helper %}
+    <div class="card">
+        {% crispy ticket_form ticket_form.helper %}
+    </div>
 </form>
 {% endblock content %}
 

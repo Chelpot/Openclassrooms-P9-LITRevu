@@ -232,5 +232,6 @@ def create_review_for_ticket(request, ticket_id):
             print(review_form.errors)
     context = {
         'review_form': review_form,
+        'ticket': ticket,
     }
     return render(request, 'review/create_review_for_ticket.html', context=context)
