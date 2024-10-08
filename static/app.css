@@ -234,4 +234,5 @@ h1{
 .larger_input_text{
     width: 100%;
     background: white;
+    resize: none;
 }
