@@ -1,14 +1,21 @@
 {% extends 'base.html' %}
 {% block content %}
-    <h2>Suivre d'autres utilisateurs</h2>
-    {% load crispy_forms_tags %}
-    {% crispy follow_form follow_form.helper %}
+<h2>Suivre d'autres utilisateurs</h2>
+{% load crispy_forms_tags %}
+{% crispy follow_form follow_form.helper %}
 
-    <div class="grid-container">
-        {% for follow in follow_list %}
-            {% include 'partials/follow_snippet.html' with follow=follow %}
-        {% endfor %}
-    </div>
+<div class="grid-container">
+    <h2>Abonnements</h2>
+    {% for follow in follow_list %}
+    {% include 'partials/follow_snippet.html' with follow=follow %}
+    {% endfor %}
+
+    <h2>Abonnés</h2>
+    {% for follower in followers_list %}
+    {% include 'partials/follower_snippet.html' with follow=follower %}
+    {% endfor %}
+
+</div>
 
 
 {% endblock content %}

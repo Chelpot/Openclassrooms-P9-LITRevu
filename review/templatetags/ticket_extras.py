@@ -1,5 +1,7 @@
 from django import template
 from django.utils import timezone
+import locale
+locale.setlocale(locale.LC_TIME,'')
 
 register = template.Library()
 
@@ -21,7 +23,7 @@ def get_posted_at_display(posted_at):
         return f'Publié il y a {int(seconds_ago // MINUTE)} minutes.'
     elif seconds_ago <= DAY:
         return f'Publié il y a {int(seconds_ago // HOUR)} heures.'
-    return f'{posted_at.strftime("%Hh%M, %d %b %y")}'
+    return f'{posted_at.strftime("%Hh%M, %d %B %Y")}'
 
 @register.filter
 def get_rating(nb_star):

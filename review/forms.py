@@ -83,7 +83,7 @@ class ReviewTicketForm(forms.Form):
     )
 
     body = forms.CharField(
-        label="Description ",
+        label="Commentaire ",
         max_length=8192,
         required=False,
         widget=forms.Textarea(attrs={'class': 'larger_input_text'}),
@@ -124,7 +124,7 @@ class ReviewOnlyForm(forms.ModelForm):
     )
 
     body = forms.CharField(
-        label="Description ",
+        label="Commentaire ",
         required=False,
         widget=forms.Textarea(attrs={'class': 'larger_input_text'}),
     )

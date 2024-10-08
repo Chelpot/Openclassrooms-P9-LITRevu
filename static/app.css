@@ -157,6 +157,7 @@ nav {
 
 .snippet-head{
     display: flex;
+    height: 2rem;
     font-size: 1rem;
 }
 

@@ -103,6 +103,7 @@ def follow(request):
     current_user = request.user
     follow_form = forms.FollowForm()
     follow_list = models.UserFollows.objects.filter(user=current_user)
+    follower_list = models.UserFollows.objects.filter(followed_user=current_user)
     UserClass = get_user_model()
     if request.method == 'POST':
         if 'subscribe' in request.POST:
@@ -128,6 +129,7 @@ def follow(request):
     context = {
         'follow_form': follow_form,
         'follow_list': follow_list,
+        'followers_list': follower_list,
     }
     return render(request, 'review/follow.html', context=context)
 

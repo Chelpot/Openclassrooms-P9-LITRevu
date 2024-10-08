@@ -1,0 +1,9 @@
+{% load ticket_extras %}
+<div class="card-follow">
+    <form class="no-margin" action="" method="post">
+        {% csrf_token %}
+        <div class="container-follow snippet-head">
+            <input class="follow-name justify-start" type="text" name="followed_user" value="{{ follow.user.username }}" readonly>
+        </div>
+    </form>
+</div>
